@@ -1,7 +1,9 @@
 import itertools
+import re
+from typing import List, Set, Any, Optional
 
 
-def open_files(path: str):
+def open_files(path: str) -> List[str]:
     """Открытие файла"""
     try:
         with open(path, encoding='utf-8') as f:
@@ -12,17 +14,20 @@ def open_files(path: str):
         print('файл не найден')
 
 
-def get_commands(command, value, data):
+def get_commands(command: str, value, data: list) -> List:
     """Работаем с командами"""
     if command == 'filter':
-        res = filter(lambda x: value in x, data)
+        res = list(filter(lambda x: value in x, data))
     elif command == 'map':
-        res = map(lambda x: x.split()[int(value)], data)
+        res = list(map(lambda x: x.split()[int(value)], data))
     elif command == 'unique':
-        res = set(data)
+        res = list(set(data))
     elif command == 'sort':
-        res = sorted(data) if value == 'asc' else sorted(data, reverse=True)
+        res = list(sorted(data) if value == 'asc' else sorted(data, reverse=True))
     elif command == 'limit':
-        res = itertools.islice(data, int(value))
+        res = list(itertools.islice(data, int(value)))
+    elif command == 'regex':
+        regex = re.compile(value)
+        res = list(filter(lambda x: re.search(regex, x), data))
 
     return res

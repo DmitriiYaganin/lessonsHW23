@@ -11,7 +11,7 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data\\")
 
-list_command = ["filter", "map", "unique", "sort", "limit"]
+list_command = ["filter", "map", "unique", "sort", "limit", "regex"]
 
 
 @app.route('/')
@@ -38,7 +38,7 @@ def perform_query():
     res1 = get_commands(cmd1, value1, open_files(DATA_DIR+file_name))
     res2 = get_commands(cmd2, value2, res1)
 
-    return jsonify(list(res2))
+    return jsonify(res2)
 
 
 if __name__ == "__main__":
